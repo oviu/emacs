@@ -34,7 +34,7 @@
 (set-face-foreground 'font-lock-keyword-face "#431C53")
 
 (define-minor-mode legerity-mode
-  "Modal editing mode."
+  "Doc description, yada yada yada."
   ;; The initial value - Set to 1 to enable by default
   nil
   ;; The indicator for the mode line.
