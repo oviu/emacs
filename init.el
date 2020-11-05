@@ -4,6 +4,7 @@
 (blink-cursor-mode 0)
 (setq-default cursor-type 'bar)
 (show-paren-mode 1)
+(setq make-backup-files nil)
 
 ;;modeline
 (set-face-attribute 'mode-line nil
