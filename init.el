@@ -1,10 +1,9 @@
- (menu-bar-mode -1)
+(menu-bar-mode -1)
 (toggle-scroll-bar -1)
 (tool-bar-mode -1)
-
 (blink-cursor-mode 0)
-
 (setq-default cursor-type 'bar)
+(show-paren-mode 1)
 
 ;;modeline
 (set-face-attribute 'mode-line nil
@@ -50,6 +49,8 @@
     (,(kbd "f") . legerity-toggle)
     (,(kbd "s") . save-buffer)
     (,(kbd "k") . legerity-kill)
+    (,(kbd "c") . legerity-copy)
+    (,(kbd "v") . legerity-paste)
     (,(kbd "O") . end-of-line)
     (,(kbd "U") . beginning-of-line)
     (,(kbd "J") . newline)
@@ -63,8 +64,20 @@
 (defun legerity-kill ()
   (interactive)
   (cond ((or (eq (point) (line-end-position)) (eq (point) (line-beginning-position)))
-	    (kill-whole-line))
-))
+	 (kill-whole-line))
+	((eq ?\( (char-before))
+	     (kill-sexp))
+	(t (progn (forward-word) (backward-kill-word 1))))
+)
+
+(defun legerity-copy ()
+  (interactive)
+  (if (region-active-p)
+      (kill-ring-save (region-beginning) (region-end))))
+
+(defun legerity-paste ()
+  (interactive)
+  (yank))
 
 (defun legerity-toggle ()
   (interactive)
@@ -74,7 +87,5 @@
       (progn (call-interactively 'legerity-mode)
 	     (setq-default cursor-type 'box))
       )
-  )
-
-
+)
 
