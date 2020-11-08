@@ -1,3 +1,21 @@
+(require 'package)
+(setq package-enable-at-statup nil)
+
+(add-to-list 'package-archives
+	     '("melpa" . "https://melpa.org/packages/"))
+(package-initialize)
+
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+;;packages
+(use-package ivy
+  :ensure t
+  :init (ivy-mode 1))
+;;----------------------------------
+
+
 (menu-bar-mode -1)
 (toggle-scroll-bar -1)
 (tool-bar-mode -1)
