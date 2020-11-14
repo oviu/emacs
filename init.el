@@ -15,14 +15,29 @@
   :init (ivy-mode 1))
 ;;----------------------------------
 
-
 (menu-bar-mode -1)
 (toggle-scroll-bar -1)
 (tool-bar-mode -1)
-(blink-cursor-mode 0)
+(fringe-mode 0)
 (setq-default cursor-type 'bar)
+(set-default 'truncate-lines t)
+(setq inhibit-startup-screen t)
+
+(electric-indent-mode 0)
+(blink-cursor-mode 0)
 (show-paren-mode 1)
+(setq show-paren-delay 0)
+
+(global-set-key (kbd "TAB") 'self-insert-command)			    
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
+(setq indent-line-function 'insert-tab)
+(defalias 'yes-or-no-p 'y-or-n-p)
+(global-set-key (kbd "<SPC>") 'legerity-space)
+
 (setq make-backup-files nil)
+(setq create-lockfiles nil)
+(setq auto-save-default nil)
 
 ;; modeline
 ;; (set-face-attribute 'mode-line nil
@@ -39,12 +54,12 @@
                     :overline nil
                     :underline nil)
 
-;;(set-face-attribute 'mode-line-inactive nil
-;;                    :background "#565063"
-;;                    :foreground "white"
-;;                    :box '(:line-width 8 :color "#565063")
-;;                    :overline nil
-;;                    :underline nil)
+(set-face-attribute 'mode-line-inactive nil
+                    :background "#2E3436"
+                    :foreground "#D3D7CF"
+                    :box '(:line-width 3 :color "#2E3436")
+                    :overline nil
+                    :underline nil)
 
 ;; light theme
  ;; (setq default-frame-alist
@@ -73,6 +88,11 @@
  (set-face-foreground 'font-lock-variable-name-face "#D3D7CF") 
  (set-face-foreground 'font-lock-function-name-face "#D3D7CF")
  (set-face-foreground 'font-lock-keyword-face "#D197D9")
+(set-face-background 'fringe "black")
+
+(set-face-background 'show-paren-match "#181B1B")
+    (set-face-foreground 'show-paren-match "#87CEEB")
+    (set-face-attribute 'show-paren-match nil :weight 'extra-bold)
 
 (define-minor-mode legerity-mode
   "Modal editing mode."
@@ -97,12 +117,18 @@
     (,(kbd "O") . end-of-line)
     (,(kbd "U") . beginning-of-line)
     (,(kbd "J") . newline)
-    (,(kbd "e") . legerity-forward)
-    (,(kbd "r") . legerity-backward)
+    (,(kbd "r") . legerity-forward)
+    (,(kbd "e") . legerity-backward)
     (,(kbd "w") . undo)
     (,(kbd "b") . ivy-switch-buffer)
     (,(kbd "a") . execute-extended-command)
     (,(kbd "z") . comment-line)
+	(,(kbd "g") . legerity-quit)
+	(,(kbd "S") . placeholder)
+	(,(kbd "8") . python-buffer-run)
+	(,(kbd "d") . ido-switch-buffer)
+	(,(kbd "T") . beginning-of-buffer)
+	(,(kbd "Y") . end-of-buffer)
     )
  ;; Make mode global rather than buffer local
    :global 1
@@ -191,6 +217,21 @@
 		(backward-char)
 )
 
+(defun legerity-space ()
+(interactive)
+	(if (or (eq (point) (line-beginning-position)) (eq ?\s (char-before)) (eq ?\t (char-before)))
+	   (insert "\s\s\s\s")
+	   (insert "\s")
+))
+
+;; need function to remove 4 spaces   	
+
+(defun legerity-quit ()
+       (interactive)
+	(if (active-minibuffer-window)
+        (minibuffer-keyboard-quit)
+        (keyboard-quit)))
+
 (defun legerity-toggle ()
   (interactive)
   (let ((inhibit-message t))
@@ -201,6 +242,25 @@
 	     (setq-default cursor-type 'box))
       ))
 )
+
+;; placeholder so key-input isn't inserted
+(defun placeholder ()
+(interactive)
+(message "not implemented yet!")
+)
+
+;; for quick/small python tests/scripts
+(defun python-buffer-run ()
+	(interactive)
+	(if (string= (buffer-name) "*shell*")
+		(kill-buffer-and-window)
+	(let (buffer-name)
+	(setq buffer-name (file-name-base))
+    (save-buffer)
+	(shell)
+	(insert (concat "python " buffer-name ".py"))
+	(execute-kbd-macro (read-kbd-macro "<RET>")))))
+
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -219,3 +279,5 @@
 (org-babel-do-load-languages
  'org-babel-load-languages '((python . t)))
 (setq org-confirm-babel-evaluate nil)
+
+
