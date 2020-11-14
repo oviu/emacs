@@ -25,10 +25,17 @@
 (setq make-backup-files nil)
 
 ;; modeline
+;; (set-face-attribute 'mode-line nil
+                    ;; :background "#676767"
+                    ;; :foreground "#FFFAFA"
+                    ;; :box '(:line-width 2 :color "#FFFAFA")
+                    ;; :overline nil
+                    ;; :underline nil)
+
 (set-face-attribute 'mode-line nil
-                    :background "#676767"
-                    :foreground "#FFFAFA"
-                    :box '(:line-width 2 :color "#FFFAFA")
+                    :background "#181B1B"
+                    :foreground "#D3D7CF"
+		    :box '(:line-width 3 :color "#181B1B")
                     :overline nil
                     :underline nil)
 
@@ -39,18 +46,34 @@
 ;;                    :overline nil
 ;;                    :underline nil)
 
-;; theme
- (setq default-frame-alist
-  '((cursor-color . "#676767")))
+;; light theme
+ ;; (setq default-frame-alist
+ ;; '((cursor-color . "#676767")))
+ ;; (set-frame-font "Roboto Mono 12" nil t)
+ ;; (set-background-color "#F5F3EF") ;; #FFFAFA
+ ;; (set-foreground-color "#676767")
+ ;; (set-face-foreground 'font-lock-comment-face "#d98695")
+ ;; (set-face-foreground 'font-lock-string-face "#676767")
+ ;; (set-face-foreground 'font-lock-type-face "#676767") 
+ ;; (set-face-foreground 'font-lock-variable-name-face "#676767") 
+ ;; (set-face-foreground 'font-lock-function-name-face "#676767") 
+;; (set-face-foreground 'font-lock-keyword-face "#431C53")
+
+
+
+;; my old Eclipse Java theme
+   (setq default-frame-alist
+  '((cursor-color . "#D3D7CF")))
  (set-frame-font "Roboto Mono 12" nil t)
- (set-background-color "#F5F3EF") ;; #FFFAFA
- (set-foreground-color "#676767")
- (set-face-foreground 'font-lock-comment-face "#d98695")
- (set-face-foreground 'font-lock-string-face "#676767")
+ (set-background-color "#2E3436") ;; #FFFAFA
+ (set-foreground-color "#D3D7CF")
+ (set-face-foreground 'font-lock-comment-face "#818FA6") 
+ (set-face-foreground 'font-lock-string-face "#FFE5B4")
  (set-face-foreground 'font-lock-type-face "#676767") 
- (set-face-foreground 'font-lock-variable-name-face "#676767") 
- (set-face-foreground 'font-lock-function-name-face "#676767") 
- (set-face-foreground 'font-lock-keyword-face "#431C53")
+ (set-face-foreground 'font-lock-variable-name-face "#D3D7CF") 
+ (set-face-foreground 'font-lock-function-name-face "#D3D7CF")
+ (set-face-foreground 'font-lock-keyword-face "#D197D9")
+
 (define-minor-mode legerity-mode
   "Modal editing mode."
 
@@ -79,6 +102,7 @@
     (,(kbd "w") . undo)
     (,(kbd "b") . ivy-switch-buffer)
     (,(kbd "a") . execute-extended-command)
+    (,(kbd "z") . comment-line)
     )
  ;; Make mode global rather than buffer local
    :global 1
@@ -191,3 +215,7 @@
  ;; If there is more than one, they won't work right.
  )
 
+;; For python literate programming
+(org-babel-do-load-languages
+ 'org-babel-load-languages '((python . t)))
+(setq org-confirm-babel-evaluate nil)
