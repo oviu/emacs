@@ -82,8 +82,8 @@
 
 
 ;; my old Eclipse Java theme
-   (setq default-frame-alist
-  '((cursor-color . "#D3D7CF")))
+ (setq default-frame-alist
+ '((cursor-color . "#D3D7CF")))
  (set-frame-font "Roboto Mono 12" nil t)
  (set-background-color "#2E3436") ;; #FFFAFA
  (set-foreground-color "#D3D7CF")
@@ -96,7 +96,7 @@
 (set-face-background 'fringe "black")
 
 (set-face-background 'show-paren-match "#181B1B")
-    (set-face-foreground 'show-paren-match "#87CEEB")
+    (set-face-foreground 'show-paren-match "#D197D9")
     (set-face-attribute 'show-paren-match nil :weight 'extra-bold)
 
 (define-minor-mode legerity-mode
@@ -130,6 +130,7 @@
     (,(kbd "z") . comment-line)
 	(,(kbd "g") . legerity-quit)
 	(,(kbd "S") . placeholder)
+	(,(kbd "F") . placeholder)
 	(,(kbd "8") . python-buffer-run)
 	(,(kbd "d") . ido-switch-buffer)
 	(,(kbd "T") . beginning-of-buffer)
